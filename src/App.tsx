@@ -1,7 +1,7 @@
 import './global.css';
 import { Table } from './components/Table';
 import { ctRoot as peopleData } from './data/random-people-data.json';
-import { type People, zPeople } from './schemas/person';
+import { type People, zPeople, zPersonPickedKey } from './schemas/person';
 import { ZodError } from 'zod';
 import { useState, useEffect } from 'react';
 
@@ -34,7 +34,8 @@ function App() {
   }
 
   if (tableData.length > 0) {
-    const keys = Object.keys(tableData[0]);
+    const keys = zPersonPickedKey.options;
+
     return <Table keys={keys} rows={[]}></Table>;
   }
 }
