@@ -16,7 +16,7 @@ export function PersonTable({ keys, rows }: TableProps) {
         <tr>
           {keys.map((key) => {
             return (
-              <th className="capitalize" key={key}>
+              <th className="capitalize p-2" key={key}>
                 {key}
               </th>
             );
@@ -38,7 +38,9 @@ function Row({ data }: RowProps) {
   return (
     <tr>
       {values.map((value, index) => (
-        <td key={index}>{String(value)}</td>
+        <td className="p-2" key={index}>
+          {String(value)}
+        </td>
       ))}
     </tr>
   );
