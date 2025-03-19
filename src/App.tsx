@@ -75,7 +75,7 @@ function App() {
     const pageNumbers = getPageNumbers(totalPages);
 
     return (
-      <div className="m-8 text-sm">
+      <div className="m-8 text-sm flex flex-col gap-4">
         <TableControls
           rowsPerPage={rowsPerPage}
           currentPage={currentPage}
