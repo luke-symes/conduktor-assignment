@@ -42,6 +42,7 @@ function App() {
 
   function handleRowLimitSelectChange(rowLimit: string) {
     setRowsPerPage(Number(rowLimit));
+    setCurrentPage(1);
   }
 
   function handlePageSelectChange(page: string) {
