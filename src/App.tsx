@@ -13,7 +13,7 @@ import lodash from 'lodash';
 
 function App() {
   const [isError, setIsError] = useState<boolean>(false);
-  const [rowLimit, setRowLimit] = useState<number>(10);
+  const [rowsPerPage, setRowsPerPage] = useState<number>(10);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [validPeopleData, setValidPeopleData] = useState<People | undefined>(
     undefined,
@@ -26,7 +26,8 @@ function App() {
         setIsError(true);
         throw new ZodError(validation.error.issues);
       } else {
-        setValidPeopleData(validation.data);
+        const validPeopleData = validation.data;
+        setValidPeopleData(validPeopleData);
       }
     } catch (error: unknown) {
       if (error instanceof ZodError) {
@@ -40,11 +41,19 @@ function App() {
   }, []);
 
   function handleRowLimitSelectChange(rowLimit: string) {
-    setRowLimit(Number(rowLimit));
+    setRowsPerPage(Number(rowLimit));
   }
 
   function handlePageSelectChange(page: string) {
     setCurrentPage(Number(page));
+  }
+
+  function getPageNumbers(totalPages: number): number[] {
+    const pageNumbers: number[] = [];
+    for (let i = 1; i <= totalPages; i++) {
+      pageNumbers.push(i);
+    }
+    return pageNumbers;
   }
 
   if (isError) {
@@ -56,16 +65,12 @@ function App() {
     const allRows: PersonPicked[] = validPeopleData.map((person) =>
       lodash.pick(person, tableKeys),
     );
-    const filteredRows = allRows.slice(0, rowLimit);
 
-    const visibleRows = filteredRows;
-
-    const totalPages = allRows.length / visibleRows.length;
-    const pageNumbers: number[] = [];
-
-    for (let i = 1; i <= totalPages; i++) {
-      pageNumbers.push(i);
-    }
+    const endRowIndex = currentPage * rowsPerPage;
+    const startRowIndex = endRowIndex - rowsPerPage;
+    const currentRows = allRows.slice(startRowIndex, endRowIndex);
+    const totalPages = allRows.length / rowsPerPage;
+    const pageNumbers = getPageNumbers(totalPages);
 
     return (
       <>
@@ -73,7 +78,7 @@ function App() {
         <select
           id="row-limit-select"
           name="Row limit"
-          value={rowLimit}
+          value={rowsPerPage}
           onChange={(event) => handleRowLimitSelectChange(event.target.value)}
         >
           <option value="10">10</option>
@@ -96,7 +101,7 @@ function App() {
             );
           })}
         </select>
-        <PersonTable keys={tableKeys} rows={visibleRows} />
+        <PersonTable keys={tableKeys} rows={currentRows} />
       </>
     );
   }
