@@ -12,7 +12,7 @@ interface RowProps {
 function Row({ data }: RowProps) {
   const values = Object.values(data);
   return (
-    <tr>
+    <tr className="border-gray-200 border-2">
       {values.map((value, index) => (
         <td className="p-2" key={index}>
           {String(value)}
@@ -26,7 +26,7 @@ export function PersonTable({ keys, rows }: TableProps) {
   return (
     <table className="table-auto">
       <thead>
-        <tr>
+        <tr className="bg-gray-200 border-gray-200 border-2">
           {keys.map((key) => {
             return (
               <th className="capitalize p-2" key={key}>
