@@ -27,8 +27,7 @@ function App() {
         setIsError(true);
         throw new ZodError(validation.error.issues);
       } else {
-        const validPeopleData = validation.data;
-        setValidPeopleData(validPeopleData);
+        setValidPeopleData(validation.data);
       }
     } catch (error: unknown) {
       if (error instanceof ZodError) {
