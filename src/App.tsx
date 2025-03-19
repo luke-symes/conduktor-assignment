@@ -6,8 +6,7 @@ import { ZodError } from 'zod';
 import { useState, useEffect } from 'react';
 
 function App() {
-  let tableData: People | undefined;
-
+  const [tableData, setTableData] = useState<People>([]);
   const [isError, setIsError] = useState<boolean>(false);
 
   useEffect(() => {
@@ -16,6 +15,8 @@ function App() {
       if (!validation.success) {
         setIsError(true);
         throw new ZodError(validation.error.issues);
+      } else {
+        setTableData(peopleData);
       }
     } catch (error: unknown) {
       if (error instanceof ZodError) {
@@ -26,13 +27,16 @@ function App() {
         console.error('Unknown error validating people data', error);
       }
     }
-  }, [tableData]);
+  }, []);
 
   if (isError) {
     return <div>Error loading table data</div>;
   }
 
-  if (tableData) return <Table></Table>;
+  if (tableData.length > 0) {
+    const keys = Object.keys(tableData[0]);
+    return <Table keys={keys} rows={[]}></Table>;
+  }
 }
 
 export default App;
