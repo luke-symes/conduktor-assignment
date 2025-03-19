@@ -1,7 +1,12 @@
 import './global.css';
-import { Table } from './components/Table';
+import { PersonTable } from './components/PersonTable';
 import { ctRoot as peopleData } from './data/random-people-data.json';
-import { type People, zPeople, zPersonPickedKey } from './schemas/person';
+import {
+  type People,
+  type PersonPicked,
+  zPeople,
+  zPersonPickedKey,
+} from './schemas/person';
 import { ZodError } from 'zod';
 import { useState, useEffect } from 'react';
 import lodash from 'lodash';
@@ -36,8 +41,10 @@ function App() {
 
   if (tableData.length > 0) {
     const tableKeys = zPersonPickedKey.options;
-    const tableRows = tableData.map((person) => lodash.pick(person, tableKeys));
-    return <Table keys={tableKeys} rows={tableRows}></Table>;
+    const tableRows: PersonPicked[] = tableData.map((person) =>
+      lodash.pick(person, tableKeys),
+    );
+    return <PersonTable keys={tableKeys} rows={tableRows} />;
   }
 }
 
