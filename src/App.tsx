@@ -4,6 +4,7 @@ import { ctRoot as peopleData } from './data/random-people-data.json';
 import { type People, zPeople, zPersonPickedKey } from './schemas/person';
 import { ZodError } from 'zod';
 import { useState, useEffect } from 'react';
+import lodash from 'lodash';
 
 function App() {
   const [tableData, setTableData] = useState<People>([]);
@@ -34,9 +35,9 @@ function App() {
   }
 
   if (tableData.length > 0) {
-    const keys = zPersonPickedKey.options;
-
-    return <Table keys={keys} rows={[]}></Table>;
+    const tableKeys = zPersonPickedKey.options;
+    const tableRows = tableData.map((person) => lodash.pick(person, tableKeys));
+    return <Table keys={tableKeys} rows={tableRows}></Table>;
   }
 }
 
