@@ -9,6 +9,19 @@ interface RowProps {
   data: PersonPicked;
 }
 
+function Row({ data }: RowProps) {
+  const values = Object.values(data);
+  return (
+    <tr>
+      {values.map((value, index) => (
+        <td className="p-2" key={index}>
+          {String(value)}
+        </td>
+      ))}
+    </tr>
+  );
+}
+
 export function PersonTable({ keys, rows }: TableProps) {
   return (
     <table className="table-auto">
@@ -30,18 +43,5 @@ export function PersonTable({ keys, rows }: TableProps) {
         })}
       </tbody>
     </table>
-  );
-}
-
-function Row({ data }: RowProps) {
-  const values = Object.values(data);
-  return (
-    <tr>
-      {values.map((value, index) => (
-        <td className="p-2" key={index}>
-          {String(value)}
-        </td>
-      ))}
-    </tr>
   );
 }
