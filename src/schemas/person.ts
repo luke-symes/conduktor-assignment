@@ -29,11 +29,9 @@ export const zPersonPicked = zPerson.pick({
   salary: true,
 });
 
-export const zPersonKey = zPerson.keyof();
 export const zPersonPickedKey = zPersonPicked.keyof();
 
 export type Person = z.infer<typeof zPerson>;
 export type People = z.infer<typeof zPeople>;
 export type PersonPicked = z.infer<typeof zPersonPicked>;
-export type PersonKey = z.infer<typeof zPersonKey>;
 export type PersonPickedKey = z.infer<typeof zPersonPickedKey>;
