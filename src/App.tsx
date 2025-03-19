@@ -14,6 +14,7 @@ import lodash from 'lodash';
 function App() {
   const [tableData, setTableData] = useState<People>([]);
   const [isError, setIsError] = useState<boolean>(false);
+  const [rowLimit, setRowLimit] = useState<number>(10);
 
   useEffect(() => {
     try {
@@ -41,10 +42,11 @@ function App() {
 
   if (tableData.length > 0) {
     const tableKeys = zPersonPickedKey.options;
-    const tableRows: PersonPicked[] = tableData.map((person) =>
+    const allRows: PersonPicked[] = tableData.map((person) =>
       lodash.pick(person, tableKeys),
     );
-    return <PersonTable keys={tableKeys} rows={tableRows} />;
+    const filteredRows = allRows.slice(0, rowLimit);
+    return <PersonTable keys={tableKeys} rows={filteredRows} />;
   }
 }
 
