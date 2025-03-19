@@ -21,5 +21,18 @@ export const zPerson = z.object({
 
 export const zPeople = z.array(zPerson);
 
+export const zPersonPicked = zPerson.pick({
+  name: true,
+  dob: true,
+  email: true,
+  verified: true,
+  salary: true,
+});
+
+export const zPersonKey = zPerson.keyof();
+export const zPersonPickedKey = zPersonPicked.keyof();
+
 export type Person = z.infer<typeof zPerson>;
 export type People = z.infer<typeof zPeople>;
+export type PersonKey = z.infer<typeof zPersonKey>;
+export type PersonPickedKey = z.infer<typeof zPersonPickedKey>;
