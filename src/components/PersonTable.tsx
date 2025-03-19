@@ -29,7 +29,7 @@ export function PersonTable({ keys, rows }: TableProps) {
         <tr className="bg-gray-200 border-gray-200 border-2">
           {keys.map((key) => {
             return (
-              <th className="capitalize p-2" key={key}>
+              <th className="capitalize p-2 text-left" key={key}>
                 {key}
               </th>
             );
