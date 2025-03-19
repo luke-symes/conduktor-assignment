@@ -46,7 +46,23 @@ function App() {
       lodash.pick(person, tableKeys),
     );
     const filteredRows = allRows.slice(0, rowLimit);
-    return <PersonTable keys={tableKeys} rows={filteredRows} />;
+    return (
+      <>
+        <label htmlFor="row-limit-select">Row limit:</label>
+        <select
+          id="row-limit-select"
+          name="Row limit"
+          value={rowLimit}
+          onChange={(event) => setRowLimit(Number(event.target.value))}
+        >
+          <option value="10">10</option>
+          <option value="50">50</option>
+          <option value="100">100</option>
+          <option value="500">500</option>
+        </select>
+        <PersonTable keys={tableKeys} rows={filteredRows} />
+      </>
+    );
   }
 }
 
