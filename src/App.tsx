@@ -74,7 +74,7 @@ function App() {
     const pageNumbers = getPageNumbers(totalPages);
 
     return (
-      <>
+      <div className="m-8 text-sm">
         <label htmlFor="row-limit-select">Row limit:</label>
         <select
           id="row-limit-select"
@@ -103,7 +103,7 @@ function App() {
           })}
         </select>
         <PersonTable keys={tableKeys} rows={currentRows} />
-      </>
+      </div>
     );
   }
 }
