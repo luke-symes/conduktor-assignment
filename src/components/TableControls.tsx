@@ -16,7 +16,9 @@ export function TableControls({
   return (
     <div className="flex gap-4">
       <div className="bg-blue-100 p-2 border-blue-100 rounded-lg">
-        <label htmlFor="row-limit-select">Row limit:</label>
+        <label htmlFor="row-limit-select" className="mr-2">
+          Row limit:
+        </label>
         <select
           id="row-limit-select"
           name="Row limit"
@@ -30,7 +32,9 @@ export function TableControls({
         </select>
       </div>
       <div className="bg-blue-100 p-2 border-blue-100 rounded-lg">
-        <label htmlFor="page-select">Page:</label>
+        <label htmlFor="page-select" className="mr-2">
+          Page:
+        </label>
         <select
           id="page-select"
           name="Page"
