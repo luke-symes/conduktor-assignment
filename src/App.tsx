@@ -1,44 +1,17 @@
 import './global.css';
 import { PersonTable } from './components/PersonTable';
 import { ctRoot as peopleData } from './data/random-people-data.json';
-import {
-  type People,
-  type PersonPicked,
-  zPeople,
-  zPersonPickedKey,
-} from './schemas/person';
-import { ZodError } from 'zod';
-import { useState, useEffect } from 'react';
+import { type PersonPicked, zPeople, zPersonPickedKey } from './schemas/person';
+import { useState } from 'react';
 import lodash from 'lodash';
 import { TableControls } from './components/TableControls';
+import { useValidation } from './hooks/useValidation';
 
 function App() {
-  const [isError, setIsError] = useState<boolean>(false);
   const [rowsPerPage, setRowsPerPage] = useState<number>(10);
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [validPeopleData, setValidPeopleData] = useState<People | undefined>(
-    undefined,
-  );
 
-  useEffect(() => {
-    try {
-      const validation = zPeople.safeParse(peopleData);
-      if (!validation.success) {
-        setIsError(true);
-        throw new ZodError(validation.error.issues);
-      } else {
-        setValidPeopleData(validation.data);
-      }
-    } catch (error: unknown) {
-      if (error instanceof ZodError) {
-        console.error('Zod Error validating people data:', error.issues);
-      } else if (error instanceof Error) {
-        console.error('Error validating people data', error.message);
-      } else {
-        console.error('Unknown error validating people data', error);
-      }
-    }
-  }, []);
+  const { isValid, isError } = useValidation(peopleData, zPeople);
 
   function handleRowLimitSelectChange(rowLimit: string) {
     setRowsPerPage(Number(rowLimit));
@@ -61,9 +34,9 @@ function App() {
     return <div>Error loading table data</div>;
   }
 
-  if (validPeopleData && validPeopleData.length > 0) {
+  if (isValid) {
     const tableKeys = zPersonPickedKey.options;
-    const allRows: PersonPicked[] = validPeopleData.map((person) =>
+    const allRows: PersonPicked[] = peopleData.map((person) =>
       lodash.pick(person, tableKeys),
     );
 
